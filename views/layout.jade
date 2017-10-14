@@ -1,7 +1,85 @@
 doctype html
-html
+html(lang='en')
   head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    
+    link(rel='stylesheet', href='/css/core.css')
+    link(href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    link(href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', rel='stylesheet', integrity='sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN', crossorigin='anonymous')
+    block header
+    
+    script(src='https://code.jquery.com/jquery-1.11.1.min.js', integrity='sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=', crossorigin='anonymous')
+    
+    script.
+      function doSearch(hash) {
+        window.location.href = '/hash/' + ((hash === undefined) ? $('#srch-term').val() : hash);
+      }
+
   body
+  
+  //- navbar
+  nav.navbar.navbar-default.navbar-toggleable-md(role='navigation')
+    .container
+
+      .navbar-header
+        a.navbar-brand(href='/')
+          span
+            img.img-responsive.logo(src='https://iotasear.ch/logo.png')
+            span.iotabold IOTA
+            | Sear.ch Tangle Explorer
+
+      .navbar-form.pull-right(role='search', style='min-width: 50%;')
+        .input-group(style='min-width: 100%;')
+          input#srch-term.form-control(type='text', placeholder='Address/Transaction/Bundle Hash')
+          .input-group-btn
+            button.btn.btn-primary(type='submit', onclick='doSearch()') Search!
+
+  .container
+    //- content
     block content
+    
+    //- spacing
+    .form-group
+    
+    //- donations
+    p
+      .input-group
+        span#basic-addon1.input-group-addon
+          | Donations 
+          i.fa.fa-heart
+        input#donationaddr.form-control(type='text', value='FL9LKLBPYVKQ9QZBSGENTIDVMOZMFXREVUNWOY9NB9GMFQWKLPDWCJSRUKYCSQVQMNGAQGDKXQ9VAMSNABFUYUOVAD', readonly='')
+        span.input-group-btn
+          button#donationbtn.btn.btn-green.btn-primary(data-clipboard-target='#donationaddr')
+            | Copy
+
+    //- footer navigation
+    .text-center
+      a(href='/') Home
+      |  
+      a(href='/donors') Donors
+      |  
+      a(href='/faq') FAQ
+
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-74273065-3', 'auto');
+      ga('send', 'pageview');
+
+      new Clipboard('#donationbtn');
+
+      $('#srch-term').keydown((e) => {if (e.which == 13) doSearch(); });
+
+    
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    block scripts
